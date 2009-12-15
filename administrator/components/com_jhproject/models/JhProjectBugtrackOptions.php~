@@ -45,10 +45,18 @@ class JhProjectBugtrackOptions extends Jhtable
 		$return = array();
 		foreach($options as $option)
 		{
-			$return[$option->type][] = $option->bugcat;
+			$return[$option->type][$option->id] = $option->bugcat;
 		}
 		
 		return $return;
+	}
+	
+	function getTypes()
+	{
+		$q = "select distinct type from `{$this->_tbl}`";
+		$this->_db->setQuery($q);
+		$data = $this->_db->loadAssocList();
+		print_r($data);
 	}
 }
 ?>

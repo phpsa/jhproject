@@ -20,7 +20,7 @@ defined('_JEXEC') or die('Restricted access');
 
 require_once('JhTable.php');
 
-class JhProject extends Jhtable
+class JhProjectBugtrackSettings extends Jhtable
 {
 	/** set our table name and defaults **/
 	var $_tbl = '#__jhproject_bugtrack_settings';
@@ -32,6 +32,12 @@ class JhProject extends Jhtable
 	var $setting_name;
 	var $setting_value;
 	
+	function updatebyname($name,$value)
+	{
+		$this->_db->setQuery("Update `{$this->_tbl}` set setting_value='".$value."' where setting_name = '" . $name . "'");
+		$this->_db->query();
+
+	}
 		
 }
 ?>
