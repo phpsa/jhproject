@@ -50,5 +50,13 @@ class JhProjectBugtrackOptions extends Jhtable
 		
 		return $return;
 	}
+	
+	function getTypes()
+	{
+		$q = "select distinct type from `{$this->_tbl}`";
+		$this->_db->setQuery($q);
+		$data = $this->_db->loadAssocList('type');
+		return array_keys($data);
+	}
 }
 ?>
