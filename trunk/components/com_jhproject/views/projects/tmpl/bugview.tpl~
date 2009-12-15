@@ -1,0 +1,5 @@
+<div class="componentheading"><?php echo $project->name . ' - ';?>  <?php echo JText::_("Bug Tracker");?> - <?php echo $bugs->bug_title;?></div> 
+<table class="contentpane" width="100%" align="left" border="0" cellpadding="4" cellspacing="0">
+<tbody>
+<tr>
+	<td>

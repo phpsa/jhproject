@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Project List">
+		<message>
+			<![CDATA[Project list]]>
+		</message>
+	</layout>
+	<state>
+		<name>JHProject</name>
+		<description>List Layout</description>
+       
+		<params>
+
+		</params>
+		<advanced>
+
+		</advanced>
+	</state>
+</metadata>
