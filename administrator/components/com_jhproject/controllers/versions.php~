@@ -73,6 +73,18 @@ class Controller_Versions extends JhprojectController
 		$this->setRedirect('index.php?option=com_jhproject&controller=versions', JText::_('Projects Deleted'));
 	}
 	
+	function generateProjectArray()
+	{
+		$project_model = $this->loadModel('JhProject');
+		$projects = $project_model->fetchAll();
+		$plist = array();
+		$plist[0] = JText::_("Select");
+		foreach($projects as $project)
+		{
+			$plist[$project->id] = $project->name;
+		}
+		$this->jhdata['plist'] = $plist;
+	}
 }
 
 ?>

@@ -49,24 +49,7 @@ class JhprojectController extends JController {
 		require_once(JPATH_COMPONENT.DS.'models'.DS.$model.'.php');
 		return new $model();
 	}
-	 /** 
-	  * @name generateProjectArray
-	  * @access private
-	  * @details Returns array of projects, array key is the project_id
-	  * @return array
-	  */
-	function generateProjectArray()
-	{
-		$project_model = $this->loadModel('JhProject');
-		$projects = $project_model->fetchAll();
-		$plist = array();
-		$plist[0] = JText::_("Select");
-		foreach($projects as $project)
-		{
-			$plist[$project->id] = $project->name;
-		}
-		$this->jhdata['plist'] = $plist;
-	}
+	
 	
 }
 ?>
