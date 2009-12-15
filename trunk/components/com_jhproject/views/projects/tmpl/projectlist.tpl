@@ -37,6 +37,8 @@
 							<a href="<?php echo $project['download_link'];?>"><img alt="<?php echo $project['name'];?>::<?php echo JText::_('Download');?>" title="<?php echo $project['name'];?>::<?php echo JText::_('Download');?>" src="<?php echo JURI::base();?>components/com_jhproject/images/download.png"/></a> 
 							<?php } ?>
 							
+							<a href="<?php echo JRoute::_('index.php?option=com_jhproject&view=bugs&pid='.$project['id'].'&Itemid=' . JRequest::getVar('Itemid'),true,0);?>"><img alt="<?php echo $project['name'];?>::<?php echo JText::_('Bug Tracker');?>" title="<?php echo $project['name'];?>::<?php echo JText::_('Bug Tracker');?>" src="<?php echo JURI::base();?>components/com_jhproject/images/firebug.png"/></a> 
+							
 							<a href="<?php echo JRoute::_('index.php?option=com_jhproject&view=projects&task=feed&pid='.$project['id'] . '&Itemid=' . JRequest::getVar('Itemid'),true,0);?>"><img  alt="<?php echo $project['name'];?>::<?php echo JText::_('Rss Feed');?>" title="<?php echo $project['name'];?>::<?php echo JText::_('Rss Feed');?>" src="<?php echo JURI::base();?>components/com_jhproject/images/feed.png"/></a></td>
 					</tr>
 					<?php
