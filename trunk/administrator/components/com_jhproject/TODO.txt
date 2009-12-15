@@ -1,0 +1,48 @@
+Wiki:
+ -> settings -> user logged in to post y / n
+ -> plugin system finalize (for additional fields and data)
+ -> implement hit counter on page
+ -> implement revisions history page
+ -> fix that not a new id each time, only revisions table id to increment, hense orig id stays orig!
+
+bug tracker / feature request
+ -> tables have been created
+ -> Build admin interface to 
+  --> edit settings, 
+  --> edit options
+  --> edit groups and group permissions
+  --> assign user to group (using JoomlaUsers table combined with bug user table) based on project!
+ -> Build bug listing with sorting for frontend
+ -> Build Add a bug form
+ -> Build comment on a bug and vote form
+ -> Build Display for bug view (should be tied with form)
+ -> triggers 
+ 
+ 
+ Version 1.0.0 of this software should launch with the following feature sets:
+ 1) project load / versioning
+ 2) documentation wiki intergrated
+ 
+ version 1.0.0 + < 2.0.0
+ Bug fixes
+ 
+ 
+ Version 2.0.0 
+ Bug tracker / Feature request Phase 1:
+  Ie listing of bugs
+  report bug / request feature
+  
+ version 2.1.0
+  Bug commenting and voting
+  
+  
+ version +++
+ Bugs and requests!
+ 
+ 
+ Look at:
+ 1) Activity Log
+ 2) Gant Chart
+ 3) Rss Feed
+ 
+

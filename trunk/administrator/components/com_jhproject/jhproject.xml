@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0" method="upgrade">
+    <name>JHProject</name>
+    <author>JHShop</author>
+    <creationDate>06/12/2009</creationDate>
+    <license>GNU/GPL</license>
+    <version>1.0.0Alpha</version>
+    <description>Project Management system for Joomla</description>
+
+    <!-- installation part -->
+    <install>
+        <queries>
+	<query>
+CREATE TABLE IF NOT EXISTS `#__jhproject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `details` text NOT NULL,
+  `forum_link` varchar(240) NOT NULL,
+  `documentation_link` varchar(240) NOT NULL,
+  `developer_name` varchar(240) NOT NULL,
+  `developer_email` varchar(240) NOT NULL,
+  `image` varchar(240) NOT NULL,
+  `published` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+);</query>
+<query>
+CREATE TABLE IF NOT EXISTS `#__jhproject_versions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
+  `release_name` varchar(240) NOT NULL,
+  `release_version` varchar(20) NOT NULL,
+  `release_date` date NOT NULL,
+  `changelog` text NOT NULL,
+  `published` int(1) NOT NULL,
+  `download_link` varchar(240) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+</query>
+        </queries>
+    </install>
+
+    <!-- user part -->
+    <files folder="components/com_jhproject">
+        <filename>controller.php</filename>
+        <filename>index.html</filename>
+        <filename>router.php</filename>
+        <filename>jhproject.php</filename>
+        <folder>controllers</folder>
+        <folder>views</folder>
+		<folder>greybox</folder>
+    </files>
+
+    <languages folder="language/en-GB">
+        <language tag="en-GB">en-GB.com_jhproject.ini</language>
+    </languages>
+
+    <!-- administration part -->
+    <administration>
+
+    <menu task="default" img="js/ThemeOffice/component.png">JHProject</menu>
+    <submenu>
+        <menu link="option=com_jhproject">Projects</menu>
+		<menu link="option=com_jhproject&amp;controller=versions">Versions</menu>
+    </submenu>
+
+    <files>
+        <filename>jhproject.xml</filename>
+    </files>
+    <files folder="administrator/components/com_jhproject">
+        <filename>config.xml</filename>
+        <filename>controller.php</filename>
+        <filename>index.html</filename>
+        <filename>jhproject.php</filename>
+        <folder>controllers</folder>
+        <folder>models</folder>
+        <folder>elements</folder>
+        <folder>views</folder>
+    </files>
+
+    <languages folder="administrator/language/en-GB">
+        <language tag="en-GB">en-GB.com_jhproject.menu.ini</language>
+        <language tag="en-GB">en-GB.com_jhproject.ini</language>
+    </languages>
+
+    </administration>
+
+    <params>
+
+    </params>
+
+</install>
