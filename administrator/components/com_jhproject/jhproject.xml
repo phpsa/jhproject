@@ -2,7 +2,7 @@
 <install type="component" version="1.5.0" method="upgrade">
     <name>JHProject</name>
     <author>JHShop</author>
-    <creationDate>06/12/2009</creationDate>
+    <creationDate>15/12/2009</creationDate>
     <license>GNU/GPL</license>
     <version>1.0.0Alpha</version>
     <description>Project Management system for Joomla</description>
@@ -10,32 +10,211 @@
     <!-- installation part -->
     <install>
         <queries>
-	<query>
-CREATE TABLE IF NOT EXISTS `#__jhproject` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL,
-  `details` text NOT NULL,
-  `forum_link` varchar(240) NOT NULL,
-  `documentation_link` varchar(240) NOT NULL,
-  `developer_name` varchar(240) NOT NULL,
-  `developer_email` varchar(240) NOT NULL,
-  `image` varchar(240) NOT NULL,
-  `published` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-);</query>
-<query>
-CREATE TABLE IF NOT EXISTS `#__jhproject_versions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11) NOT NULL,
-  `release_name` varchar(240) NOT NULL,
-  `release_version` varchar(20) NOT NULL,
-  `release_date` date NOT NULL,
-  `changelog` text NOT NULL,
-  `published` int(1) NOT NULL,
-  `download_link` varchar(240) NOT NULL,
-  PRIMARY KEY (`id`)
-);
-</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`name` varchar(200) NOT NULL,
+				`details` text NOT NULL,
+				`forum_link` varchar(240) NOT NULL,
+				`newsletter_link` tinytext NOT NULL,
+				`developer_name` varchar(240) NOT NULL,
+				`developer_email` varchar(240) NOT NULL,
+				`image` varchar(240) NOT NULL,
+				`published` int(1) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_bugtrack` (
+				`bug_id` tinyint(11) NOT NULL AUTO_INCREMENT,
+				`project_id` int(11) DEFAULT '0',
+				`reported_by` int(11) DEFAULT '0',
+				`assigned_to` int(11) DEFAULT '0',
+				`date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+				`date_closed` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+				`bug_title` varchar(200) NOT NULL,
+				`bug_details` text,
+				`bug_cat_id` int(11) NOT NULL,
+				`bug_browser_id` int(11) NOT NULL,
+				`bug_os_id` int(11) NOT NULL,
+				`bug_status_id` int(11) NOT NULL DEFAULT '0',
+				`bug_priority_id` int(11) NOT NULL,
+				`bug_version_id` int(11) NOT NULL,
+				PRIMARY KEY (`bug_id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_bugtrack_groups` (
+				`group_id` int(11) NOT NULL AUTO_INCREMENT,
+				`group_name` varchar(250) NOT NULL,
+				PRIMARY KEY (`group_id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_bugtrack_group_permissions` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`group_id` int(11) NOT NULL DEFAULT '0',
+				`perm_name` varchar(255) NOT NULL,
+				`perm_value` int(1) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_bugtrack_options` (
+				`id` tinyint(10) NOT NULL AUTO_INCREMENT,
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`bugcat` varchar(255) NOT NULL DEFAULT '',
+				`type` varchar(15) NOT NULL DEFAULT '',
+				`ordering` int(5) DEFAULT '0',
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				INSERT IGNORE INTO `jos_jhproject_bugtrack_options` (`id`, `project_id`, `bugcat`, `type`, `ordering`) VALUES
+				(1, 0, 'Bug', 'cat', 0),
+				(2, 0, 'Feature Request', 'cat', 1),
+				(3, 0, 'IE6', 'browser', 0),
+				(4, 0, 'IE7', 'browser', 1),
+				(5, 0, 'IE8', 'browser', 2),
+				(6, 0, 'FF2', 'browser', 3),
+				(7, 0, 'FF3', 'browser', 4),
+				(8, 0, 'Other', 'browser', 5),
+				(9, 0, 'Joomla 1.5', 'os', 0),
+				(10, 0, 'Joomla 1.6', 'os', 1),
+				(11, 0, 'Other', 'oper', 2),
+				(12, 0, 'Open', 'status', 0),
+				(13, 0, 'Verified', 'status', 1),
+				(14, 0, 'Started', 'status', 2),
+				(15, 0, '25% Complete', 'status', 3),
+				(16, 0, '50% Complete', 'status', 4),
+				(17, 0, '75% Complete', 'status', 5),
+				(18, 0, 'Finished', 'status', 6),
+				(19, 0, 'Not a Bug', 'status', 7),
+				(20, 0, 'Low', 'priority', 0),
+				(21, 0, 'Medium', 'priority', 1),
+				(22, 0, 'High', 'priority', 2),
+				(23, 0, 'Critical', 'priority', 3);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_bugtrack_settings` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`setting_name` varchar(255) NOT NULL,
+				`setting_value` varchar(255) NOT NULL,
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				INSERT IGNORE INTO `#__jhproject_bugtrack_settings` (`id`, `setting_name`, `setting_value`) VALUES
+				(1, 'NON_REG_ACCESS_GROUP', '1'),
+				(2, 'DEF_REG_ACCESS_GROUP', '1'),
+				(3, 'ADMIN_BUG_NOTIFICATION', '1'),
+				(4, 'USER_BUG_UPDATE_NOTIFICATION', '1');
+			</query>
+
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_bugtrack_user_permissions` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`group_id` int(11) NOT NULL DEFAULT '0',
+				`user_id` int(11) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_bugtrack_voting` (
+				`bugtrack_voting_id` int(11) NOT NULL AUTO_INCREMENT,
+				`bug_id` int(11) NOT NULL,
+				`vote_value` int(11) NOT NULL,
+				`vote_comments` text,
+				`create_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+				`user_id` int(11) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`bugtrack_voting_id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_versions` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`project_id` int(11) NOT NULL,
+				`release_name` varchar(240) NOT NULL,
+				`release_version` varchar(20) NOT NULL,
+				`release_date` date NOT NULL,
+				`changelog` text NOT NULL,
+				`published` int(1) NOT NULL,
+				`download_link` varchar(240) NOT NULL,
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_wiki_entries` (
+				`id` int(10) NOT NULL AUTO_INCREMENT,
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`title` varchar(255) NOT NULL,
+				`content` text NOT NULL,
+				`access` int(1) NOT NULL DEFAULT '0',
+				`modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				`user_id` int(10) NOT NULL,
+				`ip` varchar(15) NOT NULL,
+				`revision` int(5) NOT NULL,
+				`accessed` datetime NOT NULL,
+				PRIMARY KEY (`id`),
+				UNIQUE KEY `project_id` (`project_id`,`title`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_wiki_entry_revisions` (
+				`id` int(10) NOT NULL AUTO_INCREMENT,
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`title` varchar(255) NOT NULL,
+				`content` text NOT NULL,
+				`access` int(1) NOT NULL DEFAULT '0',
+				`modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				`user_id` int(10) NOT NULL,
+				`ip` varchar(15) NOT NULL,
+				`revision` int(5) NOT NULL,
+				`accessed` datetime NOT NULL,
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_wiki_settings` (
+				`id` int(3) NOT NULL AUTO_INCREMENT,
+				`name` varchar(50) NOT NULL,
+				`value` varchar(255) NOT NULL,
+				`default` varchar(255) NOT NULL,
+				`description` varchar(255) NOT NULL,
+				PRIMARY KEY (`id`),
+				UNIQUE KEY `name` (`name`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_wiki_uploads` (
+				`id` int(11) NOT NULL,
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`filename` varchar(255) NOT NULL,
+				`location` varchar(255) NOT NULL,
+				`access` int(1) NOT NULL,
+				`modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				`user_id` int(10) NOT NULL,
+				`ip` varchar(15) NOT NULL,
+				`revision` int(5) NOT NULL,
+				PRIMARY KEY (`id`),
+				UNIQUE KEY `filename` (`filename`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_wiki_upload_revisions` (
+				`id` int(11) NOT NULL,
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`filename` varchar(255) NOT NULL,
+				`location` varchar(255) NOT NULL,
+				`access` int(1) NOT NULL,
+				`modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				`user_id` int(10) NOT NULL,
+				`ip` varchar(15) NOT NULL,
+				`revision` int(5) NOT NULL,
+				PRIMARY KEY (`id`)
+				);
+			</query>
         </queries>
     </install>
 
@@ -48,6 +227,7 @@ CREATE TABLE IF NOT EXISTS `#__jhproject_versions` (
         <folder>controllers</folder>
         <folder>views</folder>
 		<folder>greybox</folder>
+		<folder>images</folder>
     </files>
 
     <languages folder="language/en-GB">
@@ -57,10 +237,11 @@ CREATE TABLE IF NOT EXISTS `#__jhproject_versions` (
     <!-- administration part -->
     <administration>
 
-    <menu task="default" img="js/ThemeOffice/component.png">JHProject</menu>
+    <menu task="default" img="js/ThemeOffice/sysinfo.png">JHProject</menu>
     <submenu>
-        <menu link="option=com_jhproject">Projects</menu>
-		<menu link="option=com_jhproject&amp;controller=versions">Versions</menu>
+        <menu link="option=com_jhproject" img="js/ThemeOffice/tux.png">Projects</menu>
+		<menu link="option=com_jhproject&amp;controller=versions" img="js/ThemeOffice/licence.png">Versions</menu>
+		<menu link="option=com_jhproject&amp;controller=settings" img="js/ThemeOffice/controlpanel.png">Settings</menu>
     </submenu>
 
     <files>
