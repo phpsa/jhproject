@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Project Layout">
+		<message>
+			<![CDATA[Project Layout]]>
+		</message>
+	</layout>
+	<state>
+		<name>Project Layout</name>
+		<description>Project Selection layout</description>
+        <url addpath="/administrator/components/com_jhproject/elements">
+			<param name="pid" type="project" default="0" label="Select Project" description="A Project" />
+		</url>
+		<params>
+
+		</params>
+		<advanced>
+
+		</advanced>
+	</state>
+</metadata>
