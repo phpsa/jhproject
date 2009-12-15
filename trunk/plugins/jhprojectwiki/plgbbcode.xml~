@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 1.5//DTD plugin 1.0//EN" "http://dev.joomla.org/xml/1.5/plugin-install.dtd">
+<install version="1.5" type="plugin" group="jhprojectwiki">
+	<name>Jhproject bbcode replace plugin</name>
+	<creationDate>October 2009</creationDate>
+	<author>JHSA</author>
+	<authorEmail>craig@joomla-host.co.za</authorEmail>
+	<authorUrl>joomla.jhsa.co.za</authorUrl>
+	<copyright>copyright 2009 JHSA</copyright>
+	<license>GNU/LGPL</license>
+	<version>1.0.0</version>
+	<description>allows subscript and superscript to be displayed</description>
+	<files>
+		<filename plugin="plgbbcode">plgbbcode.php</filename>
+	</files>
+</install>
