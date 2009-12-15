@@ -57,7 +57,7 @@ Class JhTable extends JTable
 			$pageNav = new JPagination( $total, $limitstart, $limit );
 			$db->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
 			$result = $db->loadObjectList();
-			print_r($query);
+			//print_r($query);
 			return array('PageNav'=>$pageNav,'rows'=>$result);
 			
 		}else{
@@ -120,5 +120,31 @@ Class JhTable extends JTable
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
+	}
+	
+	function fetchKeyArray($key,$value,$where='')
+	{
+		$db =& $this->getDBO();
+		$db->setQuery("select `$key`,`".implode("`,`",$value)."` from `{$this->_tbl}` {$where} order by `$key` asc");
+		$result = $db->loadAssocList();
+		$return = array();
+		foreach($result as $res)
+			foreach($value as $vv)
+				$return[$res[$key]][$vv] = $res[$vv];
+		
+		return $return;
+	}
+	
+	function fetchKeyPair($key,$value,$where='')
+	{
+		$db =& $this->getDBO();
+		$db->setQuery("select `$key`,`$value` from `{$this->_tbl}` {$where} order by `$key` asc");
+		$result = $db->loadAssocList();
+		$return = array();
+		foreach($result as $res)
+			$return[$res[$key]] = $res[$value];
+		
+		return $return;
+	
 	}
 }

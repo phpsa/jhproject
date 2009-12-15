@@ -48,17 +48,6 @@ class Controller_Settings extends JhprojectController
 		Viewproject::display('optionslist',$data);
 	}
 	
-	function generateProjectArray()
-	{
-		$project_model = $this->loadModel('JhProject');
-		$projects = $project_model->fetchAll();
-		$plist = array();
-		$plist[0] = JText::_("Select");
-		foreach($projects as $project)
-		{
-			$plist[$project->id] = $project->name;
-		}
-		$this->jhdata['plist'] = $plist;
-	}
+	
 	
 }

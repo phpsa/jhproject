@@ -2,7 +2,7 @@
 <install type="component" version="1.5.0" method="upgrade">
     <name>JHProject</name>
     <author>JHShop</author>
-    <creationDate>06/12/2009</creationDate>
+    <creationDate>15/12/2009</creationDate>
     <license>GNU/GPL</license>
     <version>1.0.0Alpha</version>
     <description>Project Management system for Joomla</description>

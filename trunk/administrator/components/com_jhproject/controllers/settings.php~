@@ -44,6 +44,7 @@ class Controller_Settings extends JhprojectController
 		$data['options'] = $options;
 		$data['pagetitle'] = 'Options List';
 		$data['types'] = $model->getTypes();
+		print_r($data['types']);
 		Viewproject::display('optionslist',$data);
 	}
 	

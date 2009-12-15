@@ -215,6 +215,30 @@
 				PRIMARY KEY (`id`)
 				);
 			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_faq` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`cat_id` int(11) NOT NULL DEFAULT '0',
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`question` varchar(250) NOT NULL,
+				`answer` text NOT NULL,
+				`solved` int(1) NOT NULL DEFAULT '0',
+				`date_added` date NOT NULL,
+				`date_answered` date NOT NULL,
+				`published` int(1) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`id`)
+				);
+			</query>
+			<query>
+				CREATE TABLE IF NOT EXISTS `#__jhproject_faq_cats` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`project_id` int(11) NOT NULL DEFAULT '0',
+				`name` varchar(250) NOT NULL,
+				`order` int(11) NOT NULL DEFAULT '0',
+				`published` int(1) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`id`)
+				);
+			</query>
         </queries>
     </install>
 
