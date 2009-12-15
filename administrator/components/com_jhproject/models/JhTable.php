@@ -1,0 +1,124 @@
+<?php
+
+Class JhTable extends JTable
+{
+
+	function __construct()
+	{
+		$db	=& JFactory::getDBO();
+		parent::__construct( $this->_tbl, $this->_tbl_key, $db );
+	}
+	
+	function fetchRow($oid = null)
+	{
+		return parent::load( $oid);
+	}
+	
+	function fetchOne($field,$oid = null)
+	{
+		$k = $this->_tbl_key;
+
+		if ($oid !== null) 
+		{
+			$this->$k = $oid;
+		}
+
+		$oid = $this->$k;
+		
+		$db =& $this->getDBO();
+
+		$query = 'SELECT `'.$field.'`'
+		. ' FROM '.$this->_tbl
+		. ' WHERE '.$this->_tbl_key.' = '.$db->Quote($oid);
+		$db->setQuery( $query );
+
+		if ($result = $db->loadResult( )) {
+			return $result;
+		}
+		else
+		{
+			$this->setError( $db->getErrorMsg() );
+			return false;
+		}
+	}
+	
+	function fetchAll($where = null,$order = null, $limit = 0, $limitstart = 0)
+	{
+		$db =& $this->getDBO();
+		$query = "Select * from " . $this->_tbl . " ";
+		if($where !== null && $where != '')
+			$query .= " WHERE $where ";
+		if($order !== null && $order != '')
+			$query .= " ORDER BY $order ";
+		if($limit > 0)
+		{
+			jimport('joomla.html.pagination');
+			$total = $this->fetchCount($where);
+			$pageNav = new JPagination( $total, $limitstart, $limit );
+			$db->setQuery( $query, $pageNav->limitstart, $pageNav->limit );
+			$result = $db->loadObjectList();
+			//print_r($query);
+			return array('PageNav'=>$pageNav,'rows'=>$result);
+			
+		}else{
+			$db->setQuery($query);
+			if ($result = $db->loadObjectList()) {
+				return $result;
+			}
+		}
+		
+			$this->setError( $db->getErrorMsg() );
+			return false;
+		
+	}
+	
+	function fetchCount($where = null)
+	{
+		$query = "Select count(*) as cnted from `" . $this->_tbl . "` ";
+		if($where !== null && $where != '')
+			$query .= "Where $where";
+		$db =& $this->getDBO();
+		$db->setQuery($query);
+		if ($result = $db->loadResult( )) {
+			return $result;
+		}
+		else
+		{
+			$this->setError( $db->getErrorMsg() );
+			return false;
+		}
+	}
+	
+	function insert()
+	{
+		return $this->store();
+	}
+	
+	function query($query)
+	{
+		$db =& $this->getDBO();
+		$db->setQuery($query);
+		return $db->query();
+	}
+	
+	function deleteList( $oid=null )
+	{
+		$k = $this->_tbl_key;
+		if(!is_array($oid)) $oid = array($oid);
+		JArrayHelper::toInteger( $oid );
+		
+		$query = 'DELETE FROM '.$this->_db->nameQuote( $this->_tbl ).
+		' WHERE '.$this->_tbl_key.' in ('. implode(",",$oid) . ')';
+		$this->_db->setQuery( $query );
+		
+		if ($this->_db->query())
+		{
+			return true;
+		}
+		else
+		{
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+	}
+}
