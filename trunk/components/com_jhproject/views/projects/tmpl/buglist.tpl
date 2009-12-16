@@ -36,7 +36,9 @@
 				{
 					$selected = ($pkey == $bug_status_id)?'Selected':'';
 					echo '<option value="'.$pkey.'" '.$selected.'>'.$pvalue.'</option>';
-				}?>
+				}
+				$options['status'][0] = JText::_("Uncomfirmed");
+				?>
 				</select>
 				</th>
 				<th>
