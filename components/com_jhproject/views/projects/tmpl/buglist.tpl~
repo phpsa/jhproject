@@ -98,7 +98,7 @@
 						<td><?php echo $options['status'][$bug->bug_status_id];?></td>
 						<td><?php echo JhProjectViewProjects::renderUsername($bug->assigned_to);?></td>
 						<td><?php echo DATE("Y-m-d", strtotime($bug->date_added));?></td>
-						<td><?php JhProjectViewProjects::renderBugListActions();?></td>
+						<td><?php echo JhProjectViewProjects::renderBugListActions($bug);?></td>
 					</tr>
 					<?php
 						$r = 1-$r;
